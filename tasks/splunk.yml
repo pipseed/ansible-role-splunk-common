@@ -10,7 +10,6 @@
     pkg: 
     - hugepages
     state: present
-    update_cache: true
   tags:
      - packages
   
