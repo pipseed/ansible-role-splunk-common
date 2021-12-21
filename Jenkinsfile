@@ -27,11 +27,6 @@ pipeline {
           sh "ansible-playbook provision/splunk-install.yml -i provision/hosts -e 'chosen_hosts=${params.Host}'"
         }
       }
-#      stage('Molecule Validation') {
-#        steps {
-#          sh "molecule test"
-#        }
-#      }
    }
    post {
      always {
