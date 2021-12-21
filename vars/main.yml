@@ -1,2 +1,3 @@
 ---
 # vars file for ansible-role-splunk-manager
+splunk_version: splunk-8.1.1-08187535c166-linux-2.6-amd64.deb

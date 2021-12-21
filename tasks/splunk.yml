@@ -1,0 +1,35 @@
+#### Install Splunk
+
+- name: Check if Splunk is Installed
+  stat:
+    path: /opt/splunk/bin/splunk
+  register: splunk_installed
+
+- name: Install Packages needed
+  apt:
+     pkg: 
+       -  hugepages
+     state: present
+  tags:
+     - packages
+  
+- name: Disable Transparent Huge Pages
+  command: hugeadm --thp-never
+  register: transparent
+  changed_when: false
+
+- name: Download Splunk Packages
+  get_url:
+    url: http://home.ams1.info/Ubuntu/files/{{ splunk_version }}
+    dest: /var/tmp/
+    mode: '755'
+
+- name: Install Splunk Package
+  apt:
+    deb: "/var/tmp/{{ splunk_version }}"
+    state: latest
+
+
+  
+
+
