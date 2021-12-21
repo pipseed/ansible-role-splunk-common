@@ -1,6 +1,7 @@
 ---
 ansible_python_interpreter: "/usr/bin/python3"
-key_path: keys
-docker_repo_key: docker.asc
-ubuntu_release: bionic
-location: home
+splunk_user: splunk
+splunk_home: /opt/splunk
+splunk_admin: admin
+splunk_exec: /opt/splunk/bin/splunk
+splunk_version: splunk-8.1.1-08187535c166-linux-2.6-amd64.deb

@@ -5,6 +5,10 @@
     path: /opt/splunk/bin/splunk
   register: splunk_installed
 
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
 - name: Install Packages needed
   apt:
     pkg: 
@@ -28,3 +32,51 @@
   apt:
     deb: "/var/tmp/{{ splunk_version }}"
     state: present
+
+- name: Configure Disk Override for Molecule
+  lineinfile:
+    path: /opt/splunk/etc/splunk-launch.conf
+    state: present
+    regexp: "^OPTIMISTIC_ABOUT_FILE_LOCKING = 1"
+    line: "OPTIMISTIC_ABOUT_FILE_LOCKING = 1"
+  when: 
+    - ansible_virtualization_type == "docker"
+
+- name: Set the Splunk Secret
+  copy:
+    content: "{{ splunk_secret }}"
+    dest: "{{ splunk_home }}/etc/auth/splunk.secret"
+    owner: splunk
+    group: splunk
+    mode: '0400'
+
+- name: Create the Ansible Directory
+  file:
+    path: /opt/splunk/ansible/
+    state: directory
+    owner: splunk
+    mode: '0755'
+
+- name: Enable Systemd startup
+  command: "{{ item }}"
+  with_items:
+    - "rm -rf /etc/systemd/system/Splunkd.service"
+    - "{{ splunk_exec }} enable boot-start -systemd-managed 1 -user {{ splunk_user }} --accept-license --answer-yes --no-prompt --seed-passwd '{{ splunk_password }}'"
+    - touch /opt/splunk/ansible/{{ splunk_version }}.installed
+  args:
+    creates: "/opt/splunk/ansible/{{ splunk_version }}.installed"
+
+- name: Add the Custom Splunk Daemon Cnnfiguration
+  copy: 
+    src: health.conf
+    dest: /opt/splunk/etc/system/local/
+    owner: root
+    mode: '0644'
+
+- name: Splunk Start-up Script
+  copy: 
+    src: Splunkd.service
+    dest: /etc/systemd/system/
+    owner: root
+    mode: '0644'
+  register: daemon_reload

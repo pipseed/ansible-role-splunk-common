@@ -12,11 +12,9 @@
 #
 [dev]
 dev-kvm-04
-dev-kvm-08
-dev-kvm-10
 
-[docker]
+[nonprod]
+dev-kvm-08
+
+[prod]
 dev-kvm-10
-dock-reg-01
-dock-reg-02
-docker-01
