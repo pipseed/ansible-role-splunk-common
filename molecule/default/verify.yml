@@ -1,16 +1,2 @@
 ---
 # This is an example playbook to execute Ansible tests.
-
-- name: Verify
-  hosts: all
-  gather_facts: false
-  tasks:
-  - name: Check Docker Status
-    service: 
-      name: docker
-      state: started
-
-  - name: Pull a test container
-    docker_image:
-      name: pipseed/docker-bench-security:latest
-      source: pull

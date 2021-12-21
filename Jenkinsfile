@@ -24,7 +24,7 @@ pipeline {
       
       stage('Run Playbook') {
         steps {
-          sh "ansible-playbook provision/splunk-manager.yml -i provision/hosts -e 'chosen_hosts=${params.Host}'"
+          sh "ansible-playbook provision/splunk-install.yml -i provision/hosts -e 'chosen_hosts=${params.Host}'"
         }
       }
 #      stage('Molecule Validation') {
