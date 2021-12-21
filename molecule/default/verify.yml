@@ -5,6 +5,12 @@
   hosts: all
   gather_facts: false
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+  - name: Check Docker Status
+    service: 
+      name: docker
+      state: started
+
+  - name: Pull a test container
+    docker_image:
+      name: pipseed/docker-bench-security:latest
+      source: pull

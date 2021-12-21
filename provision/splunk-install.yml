@@ -1,0 +1,6 @@
+---
+- hosts: "{{ chosen_hosts | default('none') }}"
+  become: yes
+  become_method: sudo
+  roles:
+   - Splunk-Manager

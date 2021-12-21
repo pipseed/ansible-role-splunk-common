@@ -1,7 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  become: yes
   tasks:
-    - name: "Include ansible-role-splunk-manager"
+    - name: Install ansible-role-splunk-manager
       include_role:
-        name: "ansible-role-splunk-manager"
+        name: ansible-role-splunk-manager
