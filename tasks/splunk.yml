@@ -8,7 +8,7 @@
 - name: Install Packages needed
   apt:
      pkg: 
-       -  hugepages
+     - hugepages
      state: present
   tags:
      - packages
@@ -28,8 +28,3 @@
   apt:
     deb: "/var/tmp/{{ splunk_version }}"
     state: latest
-
-
-  
-
-
