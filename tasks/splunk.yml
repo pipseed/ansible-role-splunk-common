@@ -7,9 +7,10 @@
 
 - name: Install Packages needed
   apt:
-     pkg: 
-     - hugepages
-     state: present
+    pkg: 
+    - hugepages
+    state: present
+    update_cache: yes
   tags:
      - packages
   
@@ -27,4 +28,4 @@
 - name: Install Splunk Package
   apt:
     deb: "/var/tmp/{{ splunk_version }}"
-    state: latest
+    state: present

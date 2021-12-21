@@ -10,7 +10,7 @@ lint: |
   ansible-lint
 
 platforms:
-  - name: ubuntu
+  - name: Splunk-Common
     image: pipseed/ansible-molecule:18.04 
     command: ""
     volumes:
