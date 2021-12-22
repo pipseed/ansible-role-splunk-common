@@ -33,11 +33,5 @@ pipeline {
        sh 'pwd'
        sh 'ls -ltra'
      }
-     always {
-        deleteDir()
-        dir("${env.WORKSPACE}@tmp") {
-            deleteDir()
-        }
-     }
    } 
 }
