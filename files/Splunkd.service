@@ -1,0 +1,19 @@
+[Unit]
+Description=Systemd Service file for Splunk
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/opt/splunk/bin/splunk _internal_launch_under_systemd
+KillMode=mixed
+KillSignal=SIGNIT
+TimeoutStopSec=360
+LimitNOFILE=65536
+SuccessExitStatus=51 52
+RestartPreventExitStatus=51
+RestartForceExitStatus=52
+Delegate=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+# .ansible-lint
+skip_list:
+  - 'yaml'
+  - 'role-name'
+  - 'risky-file-permissions'
+  - 'ignore-errors'
+  - 'no-handler'
+  - '403'
+
+

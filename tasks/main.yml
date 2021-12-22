@@ -1,2 +1,4 @@
 ---
 # tasks file for ansible-role-splunk-manager
+- include: ./splunk.yml
+  tags: install
