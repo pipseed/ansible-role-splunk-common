@@ -29,11 +29,6 @@ pipeline {
       }
    }
    post {
-     success {
-       sh 'git merge dev'
-       sh 'git commit -am "Merged dev branch to main'
-       sh "git push origin main"
-     }
      always {
         deleteDir()
         dir("${env.WORKSPACE}@tmp") {
