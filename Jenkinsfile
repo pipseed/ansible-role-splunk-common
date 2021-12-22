@@ -32,7 +32,7 @@ pipeline {
      success {
        sh 'pwd'
        sh 'ls -ltra'
-       sh 'git merge -X dev main'
+       sh 'git merge -X dev origin/main'
      }
    } 
 }
