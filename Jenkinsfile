@@ -1,10 +1,6 @@
 pipeline {
     agent { label 'ansible-master' }
 
-    options {
-        ansiColor('xterm')
-    }
-
     parameters {
     choice(
       name: 'Site',
