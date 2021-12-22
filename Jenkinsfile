@@ -30,10 +30,8 @@ pipeline {
    }
    post {
      success {
-       sh 'git fetch --all'
-       sh 'git checkout main'
-       sh 'git checkout dev'
-       sh 'git merge main'
+       sh 'pwd'
+       sh 'ls -ltra'
      }
      always {
         deleteDir()
