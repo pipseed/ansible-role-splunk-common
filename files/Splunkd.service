@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/opt/splunk/bin/splunk_internal_launch_under_systemd
+ExecStart=/opt/splunk/bin/splunk _internal_launch_under_systemd
 KillMode=mixed
 KillSignal=SIGNIT
 TimeoutStopSec=360
