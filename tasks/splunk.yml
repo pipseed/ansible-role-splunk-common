@@ -67,8 +67,9 @@
     - touch /opt/splunk/ansible/{{ splunk_version }}.installed
   args:
     creates: "/opt/splunk/ansible/{{ splunk_version }}.installed"
+  no_log: true
 
-- name: Add the Custom Splunk Daemon Cnnfiguration
+- name: Add the Custom Splunk Daemon Configuration
   copy: 
     src: health.conf
     dest: /opt/splunk/etc/system/local/
