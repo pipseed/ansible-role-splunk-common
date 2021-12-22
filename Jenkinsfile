@@ -29,12 +29,11 @@ pipeline {
       }
    }
    post {
-     success {
-       sh 'pwd'
-       sh 'ls -ltra'
-       sh 'git checkout main'
-       sh 'git merge dev'
-       sh 'git push'
+     always {
+        deleteDir()
+        dir("${env.WORKSPACE}@tmp") {
+            deleteDir()
+        }
      }
    } 
 }
