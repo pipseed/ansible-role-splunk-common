@@ -5,5 +5,5 @@ splunk_home: /opt/splunk
 splunk_admin: admin
 splunk_exec: /opt/splunk/bin/splunk
 splunk_version: splunk-8.1.1-08187535c166-linux-2.6-amd64.deb
-splunk_password: Chang3m3!
+splunk_password: {{ secrets.splunk_passwd }}
 splunk_secret: Chang3m3!
