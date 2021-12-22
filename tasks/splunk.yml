@@ -86,6 +86,6 @@
 
 - name: Daemon Reload
   systemd:
-    state: startup
+    state: started
     daemon_reload: yes
     name: Splunkd
