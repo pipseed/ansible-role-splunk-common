@@ -95,7 +95,7 @@
     mode: '0644'
   register: daemon_reload
 
-- name: Daemon Reload
+- name: Daemon Reload.
   systemd:
     state: started
     daemon_reload: yes
