@@ -3,4 +3,4 @@
   become: yes
   become_method: sudo
   roles:
-   - Splunk-Manager
+   - splunk-common

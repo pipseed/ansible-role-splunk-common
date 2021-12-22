@@ -83,3 +83,9 @@
     owner: root
     mode: '0644'
   register: daemon_reload
+
+- name: Daemon Reload
+  systemd:
+    state: startup
+    daemon_reload: yes
+    name: Splunkd

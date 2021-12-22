@@ -3,6 +3,6 @@
   hosts: all
   become: yes
   tasks:
-    - name: Install ansible-role-splunk-manager
+    - name: Install ansible-role-splunk-common
       include_role:
-        name: ansible-role-splunk-manager
+        name: ansible-role-splunk-common

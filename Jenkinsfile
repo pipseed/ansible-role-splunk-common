@@ -18,7 +18,7 @@ pipeline {
     stages {
       stage('Fetch Roles') {
         steps {
-          sh "ansible-galaxy install -p provision/roles -r provision/splunk-manager.yml"
+          sh "ansible-galaxy install -p provision/roles -r provision/splunk-common.yml"
         }
       }
       
