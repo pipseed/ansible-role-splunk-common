@@ -18,11 +18,22 @@
     state: present
   tags:
      - packages
-  
-- name: Disable Transparent Huge Pages
-  command: hugeadm --thp-never
+
+- name: Create the rc.local file
+  copy:
+    src: rc.local
+    dest: /etc/rc.local
+    owner: root
+    mode: '0755'
+
+- name: Test if THP is enabled
+  command: cat /sys/kernel/mm/transparent_hugepage/enabled
   register: transparent
   changed_when: false
+
+- name: Disable Transparent Huge Pages
+  command: hugeadm --thp-never
+  when: transparent.stdout.find('[never]') == -1
 
 - name: Download Splunk Packages
   get_url:
@@ -89,3 +100,4 @@
     state: started
     daemon_reload: yes
     name: Splunkd
+  when: daemon_reload is changed
