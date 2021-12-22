@@ -9,7 +9,7 @@ pipeline {
     choice(
       name: 'Host',
       choices: ['dev-kvm-04', 'dev-kvm-10', 'dev-kvm-09', 'dev-kvm-08', 'dev-kvm-07'],
-      description: 'Host to deploy to......'
+      description: 'Host to deploy to.......'
     )
     }
     environment {
@@ -29,6 +29,9 @@ pipeline {
       }
    }
    post {
+     success {
+       sh 'git merge dev -X main'
+     }
      always {
         deleteDir()
         dir("${env.WORKSPACE}@tmp") {
