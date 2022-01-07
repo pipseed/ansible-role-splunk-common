@@ -1,4 +1,4 @@
-#### Install Splunk
+#### Install Splunk.
 
 - name: Check if Splunk is Installed
   stat:
