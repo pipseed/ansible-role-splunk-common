@@ -1,9 +1,9 @@
 ---
-ansible_python_interpreter: "/usr/bin/python3"
+#ansible_python_interpreter: "/usr/bin/python3"
 splunk_user: splunk
 splunk_home: /opt/splunk
 splunk_admin: admin
 splunk_exec: /opt/splunk/bin/splunk
-splunk_version: splunk-8.1.1-08187535c166-linux-2.6-amd64.deb
+splunk_version: splunk-8.1.1-08187535c166-linux-2.6-x86_64.rpm 
 splunk_password: Chang3m3!
 splunk_secret: Chang3m3!
