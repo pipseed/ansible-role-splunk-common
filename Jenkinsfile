@@ -30,7 +30,10 @@ pipeline {
       }
    }
    post {
-     always {
+     success {
+       sh 'git merge -X dev main'
+     }
+     cleanup {
         deleteDir()
         dir("${env.WORKSPACE}@tmp") {
             deleteDir()
