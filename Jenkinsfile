@@ -1,5 +1,6 @@
 pipeline {
     agent { label 'ansible-master' }
+
     parameters {
     choice(
       name: 'Site',
@@ -9,7 +10,7 @@ pipeline {
     choice(
       name: 'Host',
       choices: ['dev-kvm-04', 'dev-kvm-10', 'dev-kvm-09', 'dev-kvm-08', 'dev-kvm-07'],
-      description: 'Host to deploy to.......'
+      description: 'Host to deploy to........'
     )
     }
     environment {
@@ -29,12 +30,11 @@ pipeline {
       }
    }
    post {
-     success {
-       sh 'pwd'
-       sh 'ls -ltra'
-       sh 'git checkout main'
-       sh 'git merge dev'
-       sh 'git push'
+     always {
+        deleteDir()
+        dir("${env.WORKSPACE}@tmp") {
+            deleteDir()
+        }
      }
    } 
 }

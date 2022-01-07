@@ -1,49 +1,40 @@
-#### Install Splunk
+#### Install Splunk.
 
 - name: Check if Splunk is Installed
   stat:
     path: /opt/splunk/bin/splunk
   register: splunk_installed
 
-- name: Update apt cache
-  apt:
-    update_cache: yes
-  when: 
-    - ansible_virtualization_type == "docker"
+- name: Disable THP at boot
+  blockinfile:
+    path: /etc/rc.local
+    block: |
+      #Disable THP at boot time
+      echo never > /sys/kernel/mm/transparent_hugepage/enabled
+      echo never > /sys/kernel/mm/transparent_hugepage/defrag
 
-- name: Install Packages needed
-  apt:
-    pkg: 
-    - hugepages
-    state: present
-  tags:
-     - packages
-
-- name: Create the rc.local file
-  copy:
-    src: rc.local
-    dest: /etc/rc.local
-    owner: root
-    mode: '0755'
-
-- name: Test if THP is enabled
+- name: Test if transparent_hugepage is enabled
   command: cat /sys/kernel/mm/transparent_hugepage/enabled
   register: transparent
   changed_when: false
 
-- name: Disable Transparent Huge Pages
-  command: hugeadm --thp-never
+
+- name: Disable Transparent Hugepage at runtime
+  shell: "{{ item }}"
+  with_items:
+    - echo never > /sys/kernel/mm/transparent_hugepage/enabled
+    - echo never > /sys/kernel/mm/transparent_hugepage/defrag
   when: transparent.stdout.find('[never]') == -1
 
 - name: Download Splunk Packages
   get_url:
-    url: http://home.ams1.info/Ubuntu/files/{{ splunk_version }}
+    url: http://home.ams1.info/CentOS/files/{{ splunk_version }}
     dest: /var/tmp/
     mode: '755'
 
 - name: Install Splunk Package
-  apt:
-    deb: "/var/tmp/{{ splunk_version }}"
+  yum:
+    name: "/var/tmp/{{ splunk_version }}"
     state: present
 
 - name: Configure Disk Override for Molecule
@@ -95,9 +86,16 @@
     mode: '0644'
   register: daemon_reload
 
-- name: Daemon Reload
+- name: Daemon Reload.
   systemd:
     state: started
     daemon_reload: yes
     name: Splunkd
   when: daemon_reload is changed
+
+- name: Modify Pam_limits
+  pam_limits:
+    domain: '*'
+    limit_type: '-'
+    limit_item: nofile
+    value: 65536
