@@ -30,7 +30,7 @@ pipeline {
       }
    }
    post {
-     always {
+     cleanup {
         deleteDir()
         dir("${env.WORKSPACE}@tmp") {
             deleteDir()
