@@ -12,7 +12,7 @@ lint: |
 platforms:
   - name: Splunk-Common
     image: geerlingguy/docker-centos7-ansible:latest 
-    command: ""
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
