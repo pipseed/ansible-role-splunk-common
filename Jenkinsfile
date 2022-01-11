@@ -32,7 +32,6 @@ pipeline {
    post {
      success {
        office365ConnectorSend message: "ansilbe-role-splunk-common", status:"", webhookUrl:"https://cruisecomputersltd.webhook.office.com/webhookb2/dbacab0c-d252-4a01-a583-16756d169829@03997cfc-e9dd-4570-b3d9-e7a22204ecf2/IncomingWebhook/8dc54f3a59434a61b9e457c92d0bf53c/154c2151-ad38-4a12-b94a-9e51d20dd477" 
-       ])
      }
    }
 }
