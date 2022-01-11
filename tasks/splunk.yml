@@ -94,9 +94,9 @@
   when: daemon_reload is changed
 
 - name: Add the Splunk Licence Check
-  file:
+  copy:
     src: splunk_licence_check.sh
-    path: /usr/local/bin/splunk_licence_check.sh
+    dest: /usr/local/bin/
     owner: root
     group: root
     mode: '0755'
