@@ -33,7 +33,7 @@ pipeline {
        success {
          withCredentials([string(credentialsId: 'TeamsURL', variable: 'Webhookurl')]) {
            office365ConnectorSend (
-           webhookUrl: Webhookurl,
+           webhookUrl: "${Webhookurl}",
            color: "${currentBuild.currentResult} == 'SUCCESS' ? '00ff00' : 'ff0000'",
            factDefinitions:[
               [ name: "Message", template: "ansible-role-splunk-common"],
