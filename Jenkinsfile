@@ -1,9 +1,5 @@
 pipeline {
     agent { label 'ansible-master' }
-    
-    environment {
-        WEBHOOK_URL     = credentials('TeamsURL')
-    }
 
     parameters {
     choice(
@@ -19,6 +15,7 @@ pipeline {
     }
     environment {
           PATH="/home/auto-test/.local/bin:${env.PATH}"
+          WEBHOOK_URL = credentials('TeamsURL')
     }
     stages {
       stage('Fetch Roles') {
