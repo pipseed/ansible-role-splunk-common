@@ -95,7 +95,7 @@
 
 - name: Add the Splunk Licence Check
   copy:
-    src: splunk_license_check.sh
+    src: splunk_licence_check.sh
     dest: /usr/local/bin/
     owner: root
     group: root
