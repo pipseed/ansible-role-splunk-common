@@ -1,6 +1,11 @@
 pipeline {
     agent { label 'ansible-master' }
 
+    environment {
+          MS_TEAMS = credentials('ms-teams-url')
+          PATH="/home/auto-test/.local/bin:${env.PATH}"
+    }
+
     parameters {
     choice(
       name: 'Site',
@@ -13,16 +18,12 @@ pipeline {
       description: 'Host to deploy to........'
     )
     }
-    environment {
-          PATH="/home/auto-test/.local/bin:${env.PATH}"
-    }
     stages {
       stage('Fetch Roles') {
         steps {
           sh "ansible-galaxy install -p provision/roles -r provision/splunk-common.yml"
         }
       }
-      
       stage('Run Playbook') {
         steps {
           sh "ansible-playbook provision/splunk-install.yml -i provision/hosts -e 'chosen_hosts=${params.Host}'"
@@ -30,11 +31,25 @@ pipeline {
       }
    }
    post {
-     cleanup {
-        deleteDir()
-        dir("${env.WORKSPACE}@tmp") {
-            deleteDir()
-        }
-     }
-   } 
+       success {
+            office365ConnectorSend (
+               webhookUrl: "$MS_TEAMS",
+               color: "${currentBuild.currentResult} == 'SUCCESS' ? '00ff00' : 'ff0000'",
+               factDefinitions:[
+                  [ name: "Message", template: "${JOB_NAME}"],
+                  [ name: "Pipeline Duration", template: "${currentBuild.durationString.minus(' and counting')}"]
+               ]
+            )
+          }
+       failure {
+            office365ConnectorSend (
+               webhookUrl: "$MS_TEAMS",
+               color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
+               factDefinitions:[
+                  [ name: "Message", template: "${JOB_NAME}"],
+                  [ name: "Pipeline Duration", template: "${currentBuild.durationString.minus(' and counting')}"]
+               ]
+            )
+         }
+   }
 }

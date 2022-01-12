@@ -93,6 +93,14 @@
     name: Splunkd
   when: daemon_reload is changed
 
+- name: Add the Splunk Licence Check
+  copy:
+    src: splunk_licence_check.sh
+    dest: /usr/local/bin/
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: Modify Pam_limits
   pam_limits:
     domain: '*'
