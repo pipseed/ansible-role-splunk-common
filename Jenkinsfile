@@ -38,7 +38,7 @@ pipeline {
    post {
        success {
             office365ConnectorSend (
-               webhookUrl: \$MS_TEAMS,
+               webhookUrl: $env.MS_TEAMS,
                color: "${currentBuild.currentResult} == 'SUCCESS' ? '00ff00' : 'ff0000'",
                factDefinitions:[
                   [ name: "Message", template: "ansible-role-splunk-common"],
@@ -48,7 +48,7 @@ pipeline {
           }
        failure {
             office365ConnectorSend (
-               webhookUrl: \$MS_TEAMS,
+               webhookUrl: $env.MS_TEAMS,
                color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
                factDefinitions:[
                   [ name: "Message", template: "${JOB_NAME}"],
