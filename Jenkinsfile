@@ -3,7 +3,7 @@ pipeline {
 
     environment {
           PATH="/home/auto-test/.local/bin:${env.PATH}"
-          WEBHOOK = credentials('TeamsURL')
+          WEBHOOK = "credentials('TeamsURL')"
     }
 
     parameters {
@@ -44,7 +44,7 @@ pipeline {
           }
        failure {
             office365ConnectorSend (
-               webhookUrl: $WEBHOOK,
+               webhookUrl: '$WEBHOOK',
                color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
                factDefinitions:[
                   [ name: "Message", template: "${JOB_NAME}"],
