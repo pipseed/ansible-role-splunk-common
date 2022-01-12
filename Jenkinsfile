@@ -2,8 +2,8 @@ pipeline {
     agent { label 'ansible-master' }
 
     environment {
+          MS_TEAMS = credentials('TeamsURL')
           PATH="/home/auto-test/.local/bin:${env.PATH}"
-          WEBHOOK = "credentials('TeamsURL')"
     }
 
     parameters {
@@ -34,7 +34,7 @@ pipeline {
    post {
        success {
             office365ConnectorSend (
-               webhookUrl: $WEBHOOK,
+               webhookUrl: '$MS_TEAMS',
                color: "${currentBuild.currentResult} == 'SUCCESS' ? '00ff00' : 'ff0000'",
                factDefinitions:[
                   [ name: "Message", template: "ansible-role-splunk-common"],
@@ -44,7 +44,7 @@ pipeline {
           }
        failure {
             office365ConnectorSend (
-               webhookUrl: '$WEBHOOK',
+               webhookUrl: '$MS_TEAMS',
                color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
                factDefinitions:[
                   [ name: "Message", template: "${JOB_NAME}"],
