@@ -2,7 +2,7 @@ pipeline {
     agent { label 'ansible-master' }
 
     environment {
-          MS_TEAMS = credentials('TeamsURL')
+          MS_TEAMS = credentials('ms-teams-url')
           PATH="/home/auto-test/.local/bin:${env.PATH}"
     }
 
