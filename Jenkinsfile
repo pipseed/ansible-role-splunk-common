@@ -48,7 +48,7 @@ pipeline {
           }
        failure {
             office365ConnectorSend (
-               webhookUrl: credentials("ms-teams-url"),
+               webhookUrl: "$MS_TEAMS",
                color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
                factDefinitions:[
                   [ name: "Message", template: "${JOB_NAME}"],
