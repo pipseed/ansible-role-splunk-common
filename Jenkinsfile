@@ -33,9 +33,8 @@ pipeline {
    }
    post {
        success {
-         withCredentials([string(credentialsId: 'TeamsURL', variable: 'TeamsURL')]) {
             office365ConnectorSend (
-               webhookUrl: "${WEBHOOK}",
+               webhookUrl: $WEBHOOK,
                color: "${currentBuild.currentResult} == 'SUCCESS' ? '00ff00' : 'ff0000'",
                factDefinitions:[
                   [ name: "Message", template: "ansible-role-splunk-common"],
@@ -43,11 +42,9 @@ pipeline {
                ]
             )
           }
-       }  
        failure {
-         withCredentials([string(credentialsId: 'TeamsURL', variable: 'TeamsURL')]) {
             office365ConnectorSend (
-               webhookUrl: "${WEBHOOK}",
+               webhookUrl: $WEBHOOK,
                color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
                factDefinitions:[
                   [ name: "Message", template: "${JOB_NAME}"],
@@ -55,6 +52,5 @@ pipeline {
                ]
             )
          }
-       }
    }
 }
