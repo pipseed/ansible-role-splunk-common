@@ -21,7 +21,7 @@ pipeline {
     stages {
       stage('testing') {
         steps {
-           sh "echo $MS_TEAMS > /root/test.txt"
+           sh "echo $MS_TEAMS > test.txt"
         }
       }
       stage('Fetch Roles') {
