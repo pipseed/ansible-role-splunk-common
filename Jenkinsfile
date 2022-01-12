@@ -19,11 +19,6 @@ pipeline {
     )
     }
     stages {
-      stage('testing') {
-        steps {
-           sh "echo $MS_TEAMS > test.txt"
-        }
-      }
       stage('Fetch Roles') {
         steps {
           sh "ansible-galaxy install -p provision/roles -r provision/splunk-common.yml"
@@ -38,7 +33,7 @@ pipeline {
    post {
        success {
             office365ConnectorSend (
-               webhookUrl: credentials("ms-teams-url"),
+               webhookUrl: "$MS_TEAMS",
                color: "${currentBuild.currentResult} == 'SUCCESS' ? '00ff00' : 'ff0000'",
                factDefinitions:[
                   [ name: "Message", template: "ansible-role-splunk-common"],
