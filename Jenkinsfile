@@ -1,6 +1,11 @@
 pipeline {
     agent { label 'ansible-master' }
 
+    environment {
+          PATH="/home/auto-test/.local/bin:${env.PATH}"
+          WEBHOOK = credentials('TeamsURL')
+    }
+
     parameters {
     choice(
       name: 'Site',
@@ -12,10 +17,6 @@ pipeline {
       choices: ['dev-kvm-04', 'dev-kvm-10', 'dev-kvm-09', 'dev-kvm-08', 'dev-kvm-07'],
       description: 'Host to deploy to........'
     )
-    }
-    environment {
-          PATH="/home/auto-test/.local/bin:${env.PATH}"
-          WEBHOOK_URL = credentials('TeamsURL')
     }
     stages {
       stage('Fetch Roles') {
@@ -32,24 +33,28 @@ pipeline {
    }
    post {
        success {
-           office365ConnectorSend (
-           webhookUrl: $WEBHOOK_URL,
-           color: "${currentBuild.currentResult} == 'SUCCESS' ? '00ff00' : 'ff0000'",
-           factDefinitions:[
-              [ name: "Message", template: "ansible-role-splunk-common"],
-              [ name: "Pipeline Duration", template: "${currentBuild.durationString.minus(' and counting')}"]
-           ]
-           )
+         withCredentials([string(credentialsId: 'TeamsURL', variable: 'TeamsURL')]) {
+            office365ConnectorSend (
+               webhookUrl: '$TeamsURL',
+               color: "${currentBuild.currentResult} == 'SUCCESS' ? '00ff00' : 'ff0000'",
+               factDefinitions:[
+                  [ name: "Message", template: "ansible-role-splunk-common"],
+                  [ name: "Pipeline Duration", template: "${currentBuild.durationString.minus(' and counting')}"]
+               ]
+            )
+          }
+       }  
+       failure {
+         withCredentials([string(credentialsId: 'TeamsURL', variable: 'TeamsURL')]) {
+            office365ConnectorSend (
+               webhookUrl: '$TeamsURL',
+               color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
+               factDefinitions:[
+                  [ name: "Message", template: "ansible-role-splunk-common"],
+                  [ name: "Pipeline Duration", template: "${currentBuild.durationString.minus(' and counting')}"]
+               ]
+            )
+         }
        }
-     failure {
-       office365ConnectorSend (
-       webhookUrl: $WEBHOOK_URL,
-       color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
-       factDefinitions:[
-          [ name: "Message", template: "ansible-role-splunk-common"],
-          [ name: "Pipeline Duration", template: "${currentBuild.durationString.minus(' and counting')}"]
-       ]
-       )
-     }
    }
 }
