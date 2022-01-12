@@ -19,12 +19,16 @@ pipeline {
     )
     }
     stages {
+      stage('testing') {
+        steps {
+           sh "echo $MS_TEAMS > /root/test.txt"
+        }
+      }
       stage('Fetch Roles') {
         steps {
           sh "ansible-galaxy install -p provision/roles -r provision/splunk-common.yml"
         }
       }
-      
       stage('Run Playbook') {
         steps {
           sh "ansible-playbook provision/splunk-install.yml -i provision/hosts -e 'chosen_hosts=${params.Host}'"
