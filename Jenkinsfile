@@ -46,6 +46,7 @@ pipeline {
        }  
        failure {
          withCredentials([string(credentialsId: 'TeamsURL', variable: 'TeamsURL')]) {
+            echo "The Teams URL is '$TeamsURL'"
             office365ConnectorSend (
                webhookUrl: '$TeamsURL',
                color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
