@@ -33,7 +33,7 @@ pipeline {
    post {
        success {
            office365ConnectorSend (
-               webhookUrl: "${env.WEBHOOK_URL}",
+           webhookUrl: $WEBHOOK_URL,
            color: "${currentBuild.currentResult} == 'SUCCESS' ? '00ff00' : 'ff0000'",
            factDefinitions:[
               [ name: "Message", template: "ansible-role-splunk-common"],
@@ -43,7 +43,7 @@ pipeline {
        }
      failure {
        office365ConnectorSend (
-       webhookUrl: "${env.WEBHOOK_URL}",
+       webhookUrl: $WEBHOOK_URL,
        color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
        factDefinitions:[
           [ name: "Message", template: "ansible-role-splunk-common"],
