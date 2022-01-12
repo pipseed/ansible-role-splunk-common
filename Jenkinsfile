@@ -43,7 +43,7 @@ pipeline {
        }
      failure {
        office365ConnectorSend (
-       webhookUrl: ${env.WEBHOOK_URL,
+       webhookUrl: ${env.WEBHOOK_URL},
        color: "${currentBuild.currentResult} == 'FAILURE' ? 'ff0000' : '00ff00'",
        factDefinitions:[
           [ name: "Message", template: "ansible-role-splunk-common"],
