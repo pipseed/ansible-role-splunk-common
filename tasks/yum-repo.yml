@@ -1,0 +1,11 @@
+# Install Yum repos
+
+- name: CentOS Plus
+  yum_repository: 
+    name: CentOS-$releasever - Plus 
+    description: CentOS Plus packages repository
+    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=centosplus 
+    enabled: 1
+    gpgcheck: 1 
+    gpgkey: http://mirror.centos.org/centos/RPM-GPG-KEY-centos5 
+    sslverify: 1
