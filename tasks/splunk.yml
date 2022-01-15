@@ -110,6 +110,7 @@
 
 - name: Modify Pam_limits Number of Processes
   pam_limits:
+    dest: /etc/security/limits.d/20-nproc.conf
     domain: '*'
     limit_type: '-'
     limit_item: nproc
