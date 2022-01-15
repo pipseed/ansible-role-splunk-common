@@ -101,9 +101,16 @@
     group: root
     mode: '0755'
 
-- name: Modify Pam_limits
+- name: Modify Pam_limits Number open files
   pam_limits:
     domain: '*'
     limit_type: '-'
     limit_item: nofile
     value: 65536
+
+- name: Modify Pam_limits Number of Processes
+  pam_limits:
+    domain: '*'
+    limit_type: '-'
+    limit_item: nproc
+    value: 500000
