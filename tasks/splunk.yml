@@ -108,17 +108,17 @@
     limit_item: nofile
     value: 65536
 
-- name: Modify Pam_limits Number of Processes
+- name: Modify Pam_limits Number of Processes limits.conf
   pam_limits:
     domain: '*'
     limit_type: '-'
     limit_item: nproc
     value: 500000
 
-- name: Modify Pam_limits Number of Processes #2
+- name: Modify Pam_limits Number of Processes 20-nproc.conf
   pam_limits:
     dest: /etc/security/limits.d/20-nproc.conf
     domain: '*'
-    limit_type: '-'
+    limit_type: 'soft'
     limit_item: nproc
     value: 500000
