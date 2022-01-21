@@ -1,3 +1,5 @@
 .vscode
 vars/secret.yml
 settings.json
+.kube
+.minikube
